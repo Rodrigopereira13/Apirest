@@ -1,4 +1,4 @@
-package com.rodrigop13.demo.config;
+package com.rodrigop13.config;
 
 import java.util.TimeZone;
 
