@@ -17,8 +17,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 @RequiredArgsConstructor //injeta as dependencias no caso autowired de userservice
 @RestController
-@RequestMapping("api/v1/usuarios")
-
+@RequestMapping("api/v1/users")
 public class UserController {
     
     private final UserService userService;
@@ -27,6 +26,6 @@ public class UserController {
     @PostMapping
     public ResponseEntity<User> create(@RequestBody User user){  //encapsula o objeto user e depois enviado para o cliente
         User usuario = userService.salvar(user);
-        return ResponseEntity.status(HttpStatus.CREATED).body(user);
+        return ResponseEntity.status(HttpStatus.CREATED).body(usuario);
     }
 }

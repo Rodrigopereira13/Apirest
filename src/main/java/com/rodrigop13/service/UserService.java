@@ -14,7 +14,7 @@ public class UserService {
     
     private final UserRepository userRepository;
 
-    @Transactional
+    @Transactional //sping vai cuidar como abrir, gerenciar e fechar a transaçao do metodo save
     public User salvar(User user) {
         return userRepository.save(user);
     }
