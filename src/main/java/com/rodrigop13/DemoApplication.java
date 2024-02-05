@@ -1,4 +1,4 @@
-package com.rodrigop13.demo;
+package com.rodrigop13;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

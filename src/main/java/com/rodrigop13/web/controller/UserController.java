@@ -1,4 +1,4 @@
-package com.rodrigop13.controller;
+package com.rodrigop13.web.controller;
 
 import org.springframework.web.bind.annotation.RestController;
 
@@ -17,14 +17,14 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 @RequiredArgsConstructor //injeta as dependencias no caso autowired de userservice
 @RestController
-@RequestMapping("api/v1/users")
+@RequestMapping("apiteste/v1/users")
 public class UserController {
     
     private final UserService userService;
 
 
     @PostMapping
-    public ResponseEntity<User> create(@RequestBody User user){  //encapsula o objeto user e depois enviado para o cliente
+    public ResponseEntity<User> create(@RequestBody User user) {
         User usuario = userService.salvar(user);
         return ResponseEntity.status(HttpStatus.CREATED).body(usuario);
     }
