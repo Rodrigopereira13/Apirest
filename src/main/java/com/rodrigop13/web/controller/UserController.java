@@ -32,7 +32,7 @@ public class UserController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<User> getByid(@PathVariable Long id) {
+    public ResponseEntity<User> getByid(@PathVariable Long id) { //pega o valor e coloca na variavel long
         User usuario = userService.buscarPorId(id);
         return ResponseEntity.ok(usuario);
     }
