@@ -19,10 +19,17 @@ public class UserService {
         return userRepository.save(user);
     }
 
-    @Transactional(readOnly = true) //metodo exclusivo para consulta no banco de dados
+    @Transactional(readOnly = true) //metodo exclusivo para consulta no banco de dados, só leitura
     public User buscarPorId(Long id) {
         return userRepository.findById(id).orElseThrow(
             () -> new RuntimeException("Usuário não encontrado.")
         );
+    }
+
+    @Transactional 
+    public User editarSenha(Long id, String password) {
+        User usuario = buscarPorId(id);
+        usuario.setPassword(password);
+        return usuario;
     }
 }
