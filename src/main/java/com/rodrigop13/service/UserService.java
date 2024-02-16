@@ -1,5 +1,7 @@
 package com.rodrigop13.service;
 
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -31,5 +33,10 @@ public class UserService {
         User usuario = buscarPorId(id);
         usuario.setPassword(password);
         return usuario;
+    }
+
+    @Transactional(readOnly = true)
+    public List<User> buscarTodos() {
+        return userRepository.findAll();
     }
 }

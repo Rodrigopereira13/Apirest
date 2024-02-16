@@ -7,6 +7,8 @@ import com.rodrigop13.service.UserService;
 
 import lombok.RequiredArgsConstructor;
 
+import java.util.List;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -42,6 +44,12 @@ public class UserController {
     public ResponseEntity<User> updatePassword(@PathVariable Long id, @RequestBody User user) { 
         User usuario = userService.editarSenha(id, user.getPassword());
         return ResponseEntity.ok(usuario);
+    }
+
+    @GetMapping
+    public ResponseEntity<List<User>> getAll(){
+        List<User> usuarios = userService.buscarTodos();
+        return ResponseEntity.ok(usuarios);
     }
 }
 

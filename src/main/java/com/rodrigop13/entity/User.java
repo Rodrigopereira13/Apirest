@@ -39,7 +39,8 @@ public class User implements Serializable{
 
     public enum Role{
 
-        ROLE_ADMIN, ROLE_CLINTE
+        ROLE_ADMIN, 
+        ROLE_CLIENTE
     }
 
     @Override
