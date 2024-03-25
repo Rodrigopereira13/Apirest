@@ -15,7 +15,7 @@ import lombok.Setter;
 @NoArgsConstructor 
 @Entity
 @Table(name = "users")
-public class User implements Serializable{
+public class Usuarios implements Serializable{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
@@ -24,12 +24,13 @@ public class User implements Serializable{
     private String username;
     @Column(name = "password", nullable = false, length = 200)
     private String password;
+
     @Enumerated(EnumType.STRING)
-    @Column(name = "role", nullable = false, length = 25)
-    private Role role;
+    @Column(name = "role", length = 25)
+    private Role role = Role.ROLE_CLIENTE;
     
     @Column(name = "data_criacao")
-    private LocalDateTime dataCriação;
+    private LocalDateTime dataCriacao;
     @Column(name = "data_modificacao")
     private LocalDateTime dataModeficacao;
     @Column(name = "criado_por")
@@ -37,18 +38,16 @@ public class User implements Serializable{
     @Column(name = "modificado_por")
     private String modificadoPor;
 
-    public enum Role{
-
-        ROLE_ADMIN, 
-        ROLE_CLIENTE
+    public enum Role {
+        ROLE_ADMIN, ROLE_CLIENTE
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        User user = (User) o;
-        return Objects.equals(id, user.id);
+        Usuarios usuarios = (Usuarios) o;
+        return Objects.equals(id, usuarios.id);
     }
 
     @Override

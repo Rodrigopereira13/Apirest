@@ -1,8 +1,11 @@
 package com.rodrigop13.web.controller;
 
+import com.rodrigop13.web.dto.UsuariosCreateDto;
+import com.rodrigop13.web.dto.UsuariosResponseDtop;
+import com.rodrigop13.web.dto.mapper.UsuariosMapper;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.rodrigop13.entity.User;
+import com.rodrigop13.entity.Usuarios;
 import com.rodrigop13.service.UserService;
 
 import lombok.RequiredArgsConstructor;
@@ -29,26 +32,26 @@ public class UserController {
 
 
     @PostMapping
-    public ResponseEntity<User> create(@RequestBody User user) {
-        User usuario = userService.salvar(user);
-        return ResponseEntity.status(HttpStatus.CREATED).body(usuario);
+    public ResponseEntity<UsuariosResponseDtop> create(@RequestBody UsuariosCreateDto createDto) {
+        Usuarios user = userService.salvar(UsuariosMapper.toUsuario(createDto));
+        return ResponseEntity.status(HttpStatus.CREATED).body(UsuariosMapper.toDto(user));
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<User> getByid(@PathVariable Long id) { //pega o valor e coloca na variavel long
-        User usuario = userService.buscarPorId(id);
+    public ResponseEntity<Usuarios> getByid(@PathVariable Long id) { //pega o valor e coloca na variavel long
+        Usuarios usuario = userService.buscarPorId(id);
         return ResponseEntity.ok(usuario);
     }
 
     @PatchMapping("/{id}")
-    public ResponseEntity<User> updatePassword(@PathVariable Long id, @RequestBody User user) { 
-        User usuario = userService.editarSenha(id, user.getPassword());
-        return ResponseEntity.ok(usuario);
+    public ResponseEntity<Usuarios> updatePassword(@PathVariable Long id, @RequestBody Usuarios usuarios) {
+        Usuarios user = userService.editarSenha(id, usuarios.getPassword());
+        return ResponseEntity.ok(user);
     }
 
     @GetMapping
-    public ResponseEntity<List<User>> getAll(){
-        List<User> usuarios = userService.buscarTodos();
+    public ResponseEntity<List<Usuarios>> getAll(){
+        List<Usuarios> usuarios = userService.buscarTodos();
         return ResponseEntity.ok(usuarios);
     }
 }
