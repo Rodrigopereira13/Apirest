@@ -2,6 +2,7 @@ package com.rodrigop13.web.controller;
 
 import com.rodrigop13.web.dto.UsuariosCreateDto;
 import com.rodrigop13.web.dto.UsuariosResponseDtop;
+import com.rodrigop13.web.dto.UsuariosSenhaDto;
 import com.rodrigop13.web.dto.mapper.UsuariosMapper;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -44,9 +45,9 @@ public class UserController {
     }
 
     @PatchMapping("/{id}")
-    public ResponseEntity<Usuarios> updatePassword(@PathVariable Long id, @RequestBody Usuarios usuarios) {
-        Usuarios user = userService.editarSenha(id, usuarios.getPassword());
-        return ResponseEntity.ok(user);
+    public ResponseEntity<Void> updatePassword(@PathVariable Long id, @RequestBody UsuariosSenhaDto dto) {
+        Usuarios usuario = userService.editarSenha(id, dto.getSenhaAtual(), dto.getNovaSenha(), dto.getConfirmarSenha());
+        return ResponseEntity.noContent().build();
     }
 
     @GetMapping
