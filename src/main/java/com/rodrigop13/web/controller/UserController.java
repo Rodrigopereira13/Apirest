@@ -4,6 +4,9 @@ import com.rodrigop13.web.dto.UsuariosCreateDto;
 import com.rodrigop13.web.dto.UsuariosResponseDtop;
 import com.rodrigop13.web.dto.UsuariosSenhaDto;
 import com.rodrigop13.web.dto.mapper.UsuariosMapper;
+
+import jakarta.validation.Valid;
+
 import org.springframework.web.bind.annotation.RestController;
 
 import com.rodrigop13.entity.Usuarios;
@@ -33,7 +36,7 @@ public class UserController {
 
 
     @PostMapping
-    public ResponseEntity<UsuariosResponseDtop> create(@RequestBody UsuariosCreateDto createDto) {
+    public ResponseEntity<UsuariosResponseDtop> create(@Valid @RequestBody UsuariosCreateDto createDto) {
         Usuarios user = userService.salvar(UsuariosMapper.toUsuario(createDto));
         return ResponseEntity.status(HttpStatus.CREATED).body(UsuariosMapper.toDto(user));
     }
@@ -45,7 +48,7 @@ public class UserController {
     }
 
     @PatchMapping("/{id}")
-    public ResponseEntity<Void> updatePassword(@PathVariable Long id, @RequestBody UsuariosSenhaDto dto) {
+    public ResponseEntity<Void> updatePassword(@PathVariable Long id,@Valid @RequestBody UsuariosSenhaDto dto) {
         Usuarios usuario = userService.editarSenha(id, dto.getSenhaAtual(), dto.getNovaSenha(), dto.getConfirmarSenha());
         return ResponseEntity.noContent().build();
     }
