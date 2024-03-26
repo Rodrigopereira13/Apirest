@@ -7,6 +7,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.rodrigop13.entity.Usuarios;
 import com.rodrigop13.repository.UserRepository;
+import com.rodrigop13.web.exception.EntityNotFoundException;
+import com.rodrigop13.web.exception.UsernameUniqueViolationException;
 
 import lombok.RequiredArgsConstructor;
 
@@ -18,14 +20,19 @@ public class UserService {
 
     @Transactional //sping vai cuidar como abrir, gerenciar e fechar a transaçao do metodo save
     public Usuarios salvar(Usuarios usuarios) {
-
-        return userRepository.save(usuarios);
+        try {
+            return userRepository.save(usuarios);
+        } catch (org.springframework.orm.jpa.JpaSystemException ex) {
+            throw new UsernameUniqueViolationException(String.format("Username {%s} ja cadastrado", usuarios.getUsername()));
+            
+        }
+        
     }
 
     @Transactional(readOnly = true) //metodo exclusivo para consulta no banco de dados, só leitura
     public Usuarios buscarPorId(Long id) {
         return userRepository.findById(id).orElseThrow(
-            () -> new RuntimeException("Usuário não encontrado.")
+            () -> new EntityNotFoundException(String.format("String {%s} nao encontrado",id))
         );
     }
 
