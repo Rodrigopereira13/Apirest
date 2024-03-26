@@ -37,7 +37,7 @@ public class ApiExceptionHandler {
 
     }
     
-    @ExceptionHandler(org.springframework.web.bind.MethodArgumentNotValidException.class)
+    @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<ErrorMessage> methodArgumentNotValidException(MethodArgumentNotValidException ex,
     HttpServletRequest request,
     BindingResult result){
@@ -47,5 +47,15 @@ public class ApiExceptionHandler {
             .contentType(MediaType.APPLICATION_JSON)
             .body(new ErrorMessage(request, HttpStatus.UNPROCESSABLE_ENTITY, "Campo(s) invalido(s)", result));
 
+    }
+
+    @ExceptionHandler(PasswordInvalidException.class)
+    public ResponseEntity<ErrorMessage> passwordInvalidException(RuntimeException ex,
+    HttpServletRequest request){
+        log.error("Api Error", ex);
+        return ResponseEntity
+            .status(HttpStatus.BAD_REQUEST)
+            .contentType(MediaType.APPLICATION_JSON)
+            .body(new ErrorMessage(request, HttpStatus.BAD_REQUEST, ex.getMessage()));
     }
 }

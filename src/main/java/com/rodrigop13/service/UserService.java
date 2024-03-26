@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.rodrigop13.entity.Usuarios;
 import com.rodrigop13.repository.UserRepository;
 import com.rodrigop13.web.exception.EntityNotFoundException;
+import com.rodrigop13.web.exception.PasswordInvalidException;
 import com.rodrigop13.web.exception.UsernameUniqueViolationException;
 
 import lombok.RequiredArgsConstructor;
@@ -22,7 +23,7 @@ public class UserService {
     public Usuarios salvar(Usuarios usuarios) {
         try {
             return userRepository.save(usuarios);
-        } catch (org.springframework.orm.jpa.JpaSystemException ex) {
+        } catch (org.springframework.dao.DataIntegrityViolationException ex) {
             throw new UsernameUniqueViolationException(String.format("Username {%s} ja cadastrado", usuarios.getUsername()));
             
         }
@@ -39,11 +40,11 @@ public class UserService {
     @Transactional 
     public Usuarios editarSenha(Long id, String senhaAtual, String novaSenha, String confirmarSenha) {
         if(!novaSenha.equals(confirmarSenha)){
-            throw new RuntimeException("Nova senha não confere com confirmação de senha");
+            throw new PasswordInvalidException("Nova senha não confere com confirmação de senha");
         }
         Usuarios usuarios = buscarPorId(id);
         if(!usuarios.getPassword().equals(senhaAtual)){
-            throw new RuntimeException("Sua senha não confere");
+            throw new PasswordInvalidException("Sua senha não confere");
         }
         usuarios.setPassword(novaSenha);
         return usuarios;
